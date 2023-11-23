@@ -1,0 +1,25 @@
+/* @file: /app/ui/global.css */
+/* використовуємо базові стилі Tailwind */
+@tailwind base;
+
+/* використовуємо компоненти Tailwind */
+@tailwind components;
+
+/* використовуємо утиліти Tailwind */
+@tailwind utilities;
+
+/* вимикаємо стрілку збільшення для елементів input типу 'number' у браузерах */
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
