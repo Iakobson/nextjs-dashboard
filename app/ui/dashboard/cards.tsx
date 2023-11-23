@@ -13,6 +13,7 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
+/*
 export default async function CardWrapper() {
   return (
     // відображає кілька карток (Card) з різними типами статистики
@@ -24,6 +25,7 @@ export default async function CardWrapper() {
     </>
   );
 }
+*/
 
 // приймає title (заголовок), value (значення), і type (тип) як властивості
 export function Card({ title, value, type,
