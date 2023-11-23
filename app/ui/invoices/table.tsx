@@ -1,3 +1,4 @@
+// @ file: /app/ui/invoices/table.tsx
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
@@ -90,6 +91,7 @@ export default async function InvoicesTable({
                         className="rounded-full"
                         width={28}
                         height={28}
+                        alt="invoice img"
                       />
                       <p>{invoice.name}</p>
                     </div>
