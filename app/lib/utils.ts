@@ -1,3 +1,4 @@
+// @file: /app/lib/utils
 import { Revenue } from './definitions';
 
 export const formatCurrency = (amount: number) => {
@@ -21,17 +22,19 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
-export const generateYAxis = (revenue: Revenue[]) => {
-  // Calculate what labels we need to display on the y-axis
-  // based on highest record and in 1000s
+// функція для генерації даних для вісі Y графіка на основі надходжень
+export const generateYAxis = (revenue:Revenue[]) => {
+  // масив для зберігання підписів для вісі Y
   const yAxisLabels = [];
+  // знайдення найвищого показника надходжень серед всіх місяців
   const highestRecord = Math.max(...revenue.map((month) => month.revenue));
+  // визначення верхнього підпису на вісі Y, округленого вгору 
   const topLabel = Math.ceil(highestRecord / 1000) * 1000;
-
+  // заповнення масиву підписів для вісі Y від верхнього значення до 0
   for (let i = topLabel; i >= 0; i -= 1000) {
     yAxisLabels.push(`$${i / 1000}K`);
   }
-
+  // об'єкт, що містить масив підписів та верхнє значення для вісі Y
   return { yAxisLabels, topLabel };
 };
 
