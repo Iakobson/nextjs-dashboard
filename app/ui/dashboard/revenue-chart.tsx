@@ -5,6 +5,7 @@ import { CalendarIcon } from '@heroicons/react/24/outline';
 import { generateYAxis } from '@/app/lib/utils';
 // типізація для Дохід
 import { Revenue } from '@/app/lib/definitions';
+import { fetchRevenue } from '@/app/lib/data';
 
 // This component is representational only.
 // For data visualization UI, check out:
@@ -13,9 +14,9 @@ import { Revenue } from '@/app/lib/definitions';
 // https://airbnb.io/visx/
 
 // основний компонент, який відображає графік надходжень
-export default async function RevenueChart({revenue}: {
-  revenue: Revenue[];
-}) {
+export default async function RevenueChart() {
+  // Fetch data inside the component
+  const revenue = await fetchRevenue();
   // висота графіка
   const chartHeight = 350;
   // генерація даних для вісі Y
