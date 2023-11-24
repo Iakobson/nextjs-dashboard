@@ -1,16 +1,18 @@
-// @file: /app/dashboard/page.tsx
+// @file: /app/dashboard/(overview)/page.tsx
 
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
-// функція для отримання даних для <RevenueChart/>
-import { fetchRevenue, fetchLatestInvoices, fetchCardData } from '@/app/lib/data';
+// функції для отримання даних
+import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data';
+import { Suspense } from 'react';
+import { RevenueChartSkeleton } from '@/app/ui/skeletons';
 
 // тут дані отримують три компоненти
 export default async function Page() {
   // інфо з бази: доходи по місяцях
-  const revenue = await fetchRevenue();
+  // const revenue = await fetchRevenue();
   // інфо з бази: останні 5 рахунків
   const latestInvoices = await fetchLatestInvoices();
   // інфо з бази: статистика по рахунках та клієнтах
@@ -38,7 +40,9 @@ export default async function Page() {
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         {/* графік доходів по місяцях /> */}
-		<RevenueChart revenue={revenue} />
+		<Suspense fallback={<RevenueChartSkeleton />}>
+          <RevenueChart />
+        </Suspense>
 		{/* таблиця з останніх 5-ти рахунків /> */}
         <LatestInvoices latestInvoices={latestInvoices} />
       </div>
