@@ -5,6 +5,8 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 // хуки для роботи з параметрами пошуку, шляхом та маршрутизацією
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+// для запобігання лишнім запитам дло бази даних
+import { useDebouncedCallback } from 'use-debounce';
 
 // компонент, який приймає пропс для тексту у полі введення
 export default function Search({ placeholder }: { placeholder:string }) {
@@ -14,8 +16,14 @@ export default function Search({ placeholder }: { placeholder:string }) {
   const pathname = usePathname();
   // отримуємо метод хука об'єкту маршрутизації
   const { replace } = useRouter();
-  // викликається при зміні значення у полі введення пошуку
-  function handleSearch(term:string) {
+
+/*
+    колбек огортає функцію пошуку і запускає код лише
+	через певний час після того, як користувач
+	припинить вводити текст (тут 300 мс)
+  */
+  const handleSearch = useDebouncedCallback( (term:string) {
+    console.log(`Searching... ${term}`);
     // створюємо об'єкт на основі поточних параметрів пошуку
     const params = new URLSearchParams(searchParams);
 	if (term) {
@@ -25,7 +33,7 @@ export default function Search({ placeholder }: { placeholder:string }) {
     }
 	// замінюємо поточний URL новим, який включає оновлені параметри пошуку
 	replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
   
   return (
     <div className="relative flex flex-1 flex-shrink-0">
