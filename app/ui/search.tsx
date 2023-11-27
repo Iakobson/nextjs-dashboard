@@ -22,7 +22,7 @@ export default function Search({ placeholder }: { placeholder:string }) {
 	через певний час після того, як користувач
 	припинить вводити текст (тут 300 мс)
   */
-  const handleSearch = useDebouncedCallback( (term:string) {
+  const handleSearch = useDebouncedCallback( (term:string) => {
     console.log(`Searching... ${term}`);
     // створюємо об'єкт на основі поточних параметрів пошуку
     const params = new URLSearchParams(searchParams);
