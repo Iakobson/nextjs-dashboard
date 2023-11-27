@@ -1,26 +1,36 @@
 'use client';
-
+// @file: /app/ui/invoices/pagination
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
-  // NOTE: comment in this code when you get to this point in the course
-
-  // const allPages = generatePagination(currentPage, totalPages);
+// відповідає за відображення пагінації на сторінці
+export default function Pagination({ totalPages }: { totalPages:number }) {
+  // отримуємо поточний шлях та параметри пошуку з URL
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  // визначаємо поточну сторінку
+  const currentPage = Number(searchParams.get('page')) || 1;
+  // генеруємо масив сторінок для відображення в компоненті
+  const allPages = generatePagination(currentPage, totalPages);
+  // функція створення URL для конкретної сторінки
+  const createPageURL = (pageNumber:number|string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
 
   return (
     <>
-      {/* NOTE: comment in this code when you get to this point in the course */}
-
-      {/* <div className="inline-flex">
-        <PaginationArrow
-          direction="left"
+      <div className="inline-flex">
+	    {/* компонент для стрілки "ліворуч" */}
+        <PaginationArrow direction="left"
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1}
         />
-
+        {/* мапимо всі сторінки для відображення */}
         <div className="flex -space-x-px">
           {allPages.map((page, index) => {
             let position: 'first' | 'last' | 'single' | 'middle' | undefined;
@@ -31,6 +41,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             if (page === '...') position = 'middle';
 
             return (
+			// компонент відображення номера сторінки або "..."
               <PaginationNumber
                 key={page}
                 href={createPageURL(page)}
@@ -41,28 +52,24 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             );
           })}
         </div>
-
-        <PaginationArrow
-          direction="right"
+        {/* компонент для стрілки "праворуч" */}
+        <PaginationArrow direction="right"
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 }
 
-function PaginationNumber({
-  page,
-  href,
-  isActive,
-  position,
-}: {
+// для відображення номерів сторінок або "..."
+function PaginationNumber({ page, href, isActive, position }: {
   page: number | string;
   href: string;
   position?: 'first' | 'last' | 'middle' | 'single';
   isActive: boolean;
 }) {
+  // визначаємо класи для стилізації
   const className = clsx(
     'flex h-10 w-10 items-center justify-center text-sm border',
     {
@@ -83,6 +90,7 @@ function PaginationNumber({
   );
 }
 
+// для відображення стрілок в компоненті
 function PaginationArrow({
   href,
   direction,
@@ -92,6 +100,7 @@ function PaginationArrow({
   direction: 'left' | 'right';
   isDisabled?: boolean;
 }) {
+  // визначаємо класи для стилізації
   const className = clsx(
     'flex h-10 w-10 items-center justify-center rounded-md border',
     {
@@ -101,7 +110,7 @@ function PaginationArrow({
       'ml-2 md:ml-4': direction === 'right',
     },
   );
-
+  // визначаємо напрямок стрілки
   const icon =
     direction === 'left' ? (
       <ArrowLeftIcon className="w-4" />
