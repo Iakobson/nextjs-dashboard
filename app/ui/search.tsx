@@ -26,6 +26,8 @@ export default function Search({ placeholder }: { placeholder:string }) {
     console.log(`Searching... ${term}`);
     // створюємо об'єкт на основі поточних параметрів пошуку
     const params = new URLSearchParams(searchParams);
+    // скидуємо на першу сторінку
+	params.set('page', '1');
 	if (term) {
       params.set('query', term);
     } else {
