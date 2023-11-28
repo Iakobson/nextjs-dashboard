@@ -1,3 +1,4 @@
+// @path: @/app/ui/invoices/create-form
 import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -7,7 +8,7 @@ import {
 import { Button } from '@/app/ui/button';
 import { createInvoice } from '@/app/lib/actions';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form({ customers }: { customers:CustomerField[] }) {
   return (
     <form action={createInvoice}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -17,9 +18,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             Choose customer
           </label>
           <div className="relative">
-            <select
-              id="customer"
-              name="customerId"
+            <select id="customer" name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
             >
@@ -43,11 +42,8 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
-              <input
-                id="amount"
-                name="amount"
-                type="number"
-                step="0.01"
+              <input id="amount" name="amount"
+                type="number" step="0.01"
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
@@ -64,11 +60,8 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
               <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="status"
-                  type="radio"
-                  value="pending"
+                <input id="pending" name="status"
+                  type="radio" value="pending"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
@@ -79,11 +72,8 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 </label>
               </div>
               <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
+                <input id="paid" name="status"
+                  type="radio" value="paid"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
