@@ -4,6 +4,10 @@
 import { z } from 'zod';
 // для роботи з базою даних PostgreSQL
 import { sql } from '@vercel/postgres';
+// для оновлення кешу після змін в базі даних
+import { revalidatePath } from 'next/cache';
+// для перенаправлення на потрібну сторінку
+import { redirect } from 'next/navigation';
 
 // визначення схеми форми за допомогою zod
 const FormSchema = z.object( {
@@ -37,5 +41,7 @@ export async function createInvoice(formData:FormData) {
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
   `;
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
 }
 
