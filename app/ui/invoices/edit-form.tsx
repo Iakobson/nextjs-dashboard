@@ -1,26 +1,32 @@
 'use client';
-
+// @path: @/app/ui/invoices/edit-form.tsx
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
 import {
-  CheckIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
+  CheckIcon, ClockIcon,
+  CurrencyDollarIcon, UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+//
+import { updateInvoice } from '@/app/lib/actions';
 
-export default function EditInvoiceForm({
-  invoice,
-  customers,
-}: {
-  invoice: InvoiceForm;
-  customers: CustomerField[];
+// форма для редагування інформації про рахунок
+export default function EditInvoiceForm({invoice, customers}: {
+  invoice:InvoiceForm;
+  customers:CustomerField[];
 }) {
+  // створює нову функцію, яка буде мати те ж тіло, що й updateInvoice, але з фіксованим значенням invoice.id
+  // корисно, якщо потрібно передати функцію з певними параметрами в інше місце
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+  
   return (
-    <form>
+    // використовуємо атрибут action для вказівки URL-адреси або функції,
+	// яка викликається при подачі форми
+    <form action={updateInvoiceWithId}>
+	  {/* приховане поле для передачі id рахунку, який слід оновити */}
+	  <input type="hidden" name="id" value={invoice.id} />
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* випадаючий список для вибору клієнта */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
             Choose customer
@@ -45,7 +51,7 @@ export default function EditInvoiceForm({
           </div>
         </div>
 
-        {/* Invoice Amount */}
+        {/* вибір суми рахунку */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Choose an amount
