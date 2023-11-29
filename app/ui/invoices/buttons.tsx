@@ -1,7 +1,9 @@
 // @file: @/app/ui/invoices/buttons
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { deleteInvoice } from '@/app/lib/actions';
 
+// для створення нового рахунку
 export function CreateInvoice() {
   return (
     <Link
@@ -14,6 +16,7 @@ export function CreateInvoice() {
   );
 }
 
+// для оновлення інформації по існуючому рахунку
 export function UpdateInvoice({ id }: { id:string }) {
   return (
     <Link
@@ -25,13 +28,16 @@ export function UpdateInvoice({ id }: { id:string }) {
   );
 }
 
+// для видалення існуючого рахунку
 export function DeleteInvoice({ id }: { id:string }) {
+  // функція, яка буде викликати deleteInvoice з фіксованим значенням id
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
   return (
-    <>
+    <form action={deleteInvoiceWithId}>
       <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
       </button>
-    </>
+    </form>
   );
 }
