@@ -1,6 +1,7 @@
+// middleware.ts
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
- 
+// initializing NextAuth.js with authConfig object
 export default NextAuth(authConfig).auth;
  
 export const config = {
