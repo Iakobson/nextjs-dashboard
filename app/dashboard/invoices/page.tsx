@@ -1,4 +1,6 @@
 // @file: /app/dashboard/invoices/page.tsx
+import { Metadata } from 'next';
+
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/invoices/table';
@@ -8,8 +10,12 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 // отримуємо кількість сторінок із рахунками
 import { fetchInvoicesPages } from '@/app/lib/data';
+
+export const metadata: Metadata = {
+  title: 'Invoices',
+};
  
-export default async function Page( {searchParams}: {
+export default async function InvoicesPage( {searchParams}: {
   searchParams?: {
     query?:string;
     page?:string;
